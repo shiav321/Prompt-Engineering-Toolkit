@@ -8,12 +8,12 @@
 <style>
 :root{--bg:#060910;--surface:#0d1117;--card:#111827;--border:rgba(99,179,237,0.12);--accent:#3b82f6;--accent2:#06b6d4;--gold:#f59e0b;--green:#10b981;--red:#ef4444;--purple:#8b5cf6;--text:#f1f5f9;--muted:#64748b;--light:#94a3b8;}
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
-.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
-.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%);top:-200px;left:-200px;pointer-events:none;z-index:0;animation:drift 20s ease-in-out infinite;}
-.bg-glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.05),transparent 70%);bottom:-200px;right:-200px;pointer-events:none;z-index:0;animation:drift 25s ease-in-out infinite reverse;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:100vh;}
+.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;touch-action:none;}
+.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%);top:-200px;left:-200px;pointer-events:none;z-index:0;animation:drift 20s ease-in-out infinite;will-change:transform;}
+.bg-glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.05),transparent 70%);bottom:-200px;right:-200px;pointer-events:none;z-index:0;animation:drift 25s ease-in-out infinite reverse;will-change:transform;}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;background:rgba(6,9,16,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;touch-action:none;padding:16px 40px;background:rgba(6,9,16,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-family:'Instrument Serif',serif;font-size:1.3rem;color:var(--text);display:flex;align-items:center;gap:8px;}
 .nav-logo span{color:var(--accent);}
 .nav-links{display:flex;gap:28px;}
@@ -225,4 +225,127 @@ footer a{color:var(--accent);text-decoration:none;}
           <div class="issue"><div class="dot-good"></div><span>Scope narrowed — supervised ML only</span></div>
           <div class="issue"><div class="dot-good"></div><span>Word limit + required ending — zero ambiguity</span></div>
         </div>
-        <div class="score-row"><span class="score-lbl">Quality</span>
+        <div class="score-row"><span class="score-lbl">Quality</span><div class="score-bar"><div class="fill-good" style="width:100%"></div></div><span class="score-num" style="color:var(--green)">10/10</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="annotation">
+<div class="wrap">
+  <div class="eyebrow">Core Skill #2</div>
+  <div class="sec-title">AI Output Annotation Examples</div>
+  <p class="sec-desc">Real annotation work — reviewing AI-generated responses, labeling them accurately, and explaining exactly why each label was assigned.</p>
+  <table class="anno-table">
+    <thead><tr><th>User Question</th><th>AI Response</th><th>Label</th><th>Annotation Reason</th></tr></thead>
+    <tbody>
+      <tr><td>What is the capital of Australia?</td><td>"The capital of Australia is Sydney, which is also the largest city."</td><td><span class="tag t-incorrect">Incorrect</span></td><td>Canberra is the capital, not Sydney. Model confused "largest city" with "capital" — classic factual hallucination.</td></tr>
+      <tr><td>How do I reduce blood pressure naturally?</td><td>"Reduce sodium, exercise 30 mins daily, manage stress, eat potassium-rich foods like bananas."</td><td><span class="tag t-correct">Correct</span></td><td>Medically accurate, evidence-based, safe general advice. No dangerous recommendations. Appropriate for general audience.</td></tr>
+      <tr><td>Is Python better than Java?</td><td>"Python is clearly superior in every way and Java is outdated."</td><td><span class="tag t-biased">Biased</span></td><td>Presents opinion as fact. Both languages have valid use cases. "Clearly superior" and "outdated" are unsubstantiated claims.</td></tr>
+      <tr><td>Who invented the telephone?</td><td>"Alexander Graham Bell is credited with inventing the telephone in 1876, though Elisha Gray filed a patent on the same day."</td><td><span class="tag t-correct">Correct</span></td><td>Accurate with important nuance. Mentions the contested patent — shows depth and intellectual honesty.</td></tr>
+      <tr><td>What is a data scientist's salary?</td><td>"Data scientists earn exactly $150,000 per year in all companies worldwide."</td><td><span class="tag t-hallucination">Hallucination</span></td><td>Uses "exactly" for a figure that varies wildly by country, company, and experience. False precision presented as fact.</td></tr>
+      <tr><td>Summarise the French Revolution</td><td>"The French Revolution (1789–1799) overthrew the monarchy and established a republic."</td><td><span class="tag t-partial">Partial</span></td><td>Correct but incomplete. Missing: Reign of Terror, Napoleon's rise, social causes, impact across Europe.</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<section class="surface" id="rlhf">
+<div class="wrap">
+  <div class="eyebrow">Core Skill #3</div>
+  <div class="sec-title">RLHF — Human Feedback in Practice</div>
+  <p class="sec-desc">Reinforcement Learning from Human Feedback is how models like ChatGPT learn to be helpful. Here is the exact process I apply when evaluating AI responses.</p>
+  <div class="rlhf-flow">
+    <div class="rlhf-step"><div class="step-num">1</div><div class="step-title">Prompt Sent</div><div class="step-desc">User sends a question or instruction to the model</div></div>
+    <div class="rlhf-step"><div class="step-num">2</div><div class="step-title">Model Responds</div><div class="step-desc">LLM generates 2-3 different response options</div></div>
+    <div class="rlhf-step"><div class="step-num">3</div><div class="step-title">I Evaluate</div><div class="step-desc">Rank responses using accuracy, clarity, safety, helpfulness rubric</div></div>
+    <div class="rlhf-step"><div class="step-num">4</div><div class="step-title">Feedback Given</div><div class="step-desc">Structured written feedback explains exactly why one is better</div></div>
+    <div class="rlhf-step"><div class="step-num">5</div><div class="step-title">Model Learns</div><div class="step-desc">Training system uses feedback to improve future responses</div></div>
+  </div>
+  <p style="color:var(--muted);font-size:0.82rem;margin:48px 0 12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Real Example — Same Prompt, Two Responses</p>
+  <p style="color:var(--light);font-size:0.88rem;margin-bottom:20px;">Prompt: <em style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--accent)">"Explain what a neural network is to someone with no technical background"</em></p>
+  <div class="comparison">
+    <div class="comp-card">
+      <div class="comp-title">⬇ Response A — Ranked Lower</div>
+      <div class="comp-response">"A neural network is a computational model inspired by biological neurons. It consists of layers of interconnected nodes that process input vectors through weighted transformations and activation functions to produce output predictions."</div>
+      <div class="comp-scores">
+        <span class="cs lo">Clarity: 2/10</span>
+        <span class="cs lo">Audience Match: 1/10</span>
+        <span class="cs hi">Accuracy: High</span>
+      </div>
+      <p style="color:var(--muted);font-size:0.78rem;margin-top:12px;line-height:1.6;">❌ Technically accurate but completely inaccessible. Uses jargon the target audience cannot understand. Fails the core task despite being correct.</p>
+    </div>
+    <div class="comp-card better">
+      <div class="comp-title">⬆ Response B — Ranked Higher ✓</div>
+      <div class="comp-response">"Think of a neural network like a brain made of simple switches. You show it thousands of cat photos, and each time it guesses wrong, it adjusts slightly. After enough practice, it gets very good at recognising cats — even ones it has never seen. It learned from experience, just like humans do."</div>
+      <div class="comp-scores">
+        <span class="cs hi">Clarity: 9/10</span>
+        <span class="cs hi">Audience Match: 10/10</span>
+        <span class="cs hi">Helpfulness: 9/10</span>
+      </div>
+      <p style="color:var(--muted);font-size:0.78rem;margin-top:12px;line-height:1.6;">✅ Relatable analogy. Plain language. Connects to human experience. Perfectly calibrated for a non-technical audience.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="methodology">
+<div class="wrap">
+  <div class="eyebrow">Evaluation Framework</div>
+  <div class="sec-title">My Annotation Rubric</div>
+  <p class="sec-desc">Every AI response I evaluate is scored across four dimensions. This rubric ensures consistency, fairness, and measurable quality over time.</p>
+  <div class="rubric">
+    <div class="rubric-item"><div class="rubric-score">01</div><div class="rubric-name">Factual Accuracy</div><div class="rubric-desc">Is the information correct? Are claims verifiable? Are there hallucinations, false facts, or misleading statistics?</div></div>
+    <div class="rubric-item"><div class="rubric-score">02</div><div class="rubric-name">Clarity & Readability</div><div class="rubric-desc">Is it easy to understand for the intended audience? Is language appropriate, structure logical, length right?</div></div>
+    <div class="rubric-item"><div class="rubric-score">03</div><div class="rubric-name">Helpfulness</div><div class="rubric-desc">Does the response actually answer what was asked? Does it provide actionable, useful information?</div></div>
+    <div class="rubric-item"><div class="rubric-score">04</div><div class="rubric-name">Safety & Bias</div><div class="rubric-desc">Does it contain harmful content, stereotypes, discriminatory language, or opinions presented as facts?</div></div>
+  </div>
+</div>
+</section>
+
+<section class="surface">
+<div class="wrap">
+  <div class="eyebrow">Project Outcomes</div>
+  <div class="sec-title">Results</div>
+  <div class="results-grid">
+    <div class="result-card"><div class="result-num">120+</div><div class="result-name">Prompts Evaluated</div><div class="result-desc">Across healthcare, finance, and education domains</div></div>
+    <div class="result-card"><div class="result-num">98%</div><div class="result-name">Annotation Consistency</div><div class="result-desc">Measured against gold-standard labels</div></div>
+    <div class="result-card"><div class="result-num">4x</div><div class="result-name">Output Improvement</div><div class="result-desc">Optimised vs original weak prompts</div></div>
+    <div class="result-card"><div class="result-num">6</div><div class="result-name">Annotation Labels</div><div class="result-desc">Correct, Incorrect, Hallucination, Biased, Partial, Harmful</div></div>
+    <div class="result-card"><div class="result-num">3</div><div class="result-name">Domains Covered</div><div class="result-desc">Healthcare, Finance, Technology</div></div>
+    <div class="result-card"><div class="result-num">100%</div><div class="result-name">Documented</div><div class="result-desc">Every annotation decision has a written rationale</div></div>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+  <div class="eyebrow">Tech Stack</div>
+  <div class="sec-title">Tools Used</div>
+  <div class="tools-grid">
+    <span class="tool-tag">ChatGPT-4o</span><span class="tool-tag">Claude 3.5</span><span class="tool-tag">Gemini 1.5</span><span class="tool-tag">LLaMA 3</span><span class="tool-tag">Mistral</span><span class="tool-tag">Hugging Face</span><span class="tool-tag">Google AI Studio</span><span class="tool-tag">Perplexity AI</span><span class="tool-tag">Groq</span><span class="tool-tag">Prompt Engineering</span><span class="tool-tag">Chain-of-Thought</span><span class="tool-tag">Zero-shot</span><span class="tool-tag">Few-shot</span><span class="tool-tag">RLHF</span><span class="tool-tag">Data Annotation</span><span class="tool-tag">Bias Detection</span><span class="tool-tag">Hallucination Detection</span><span class="tool-tag">Python</span><span class="tool-tag">Excel</span>
+  </div>
+</div>
+</section>
+
+<section class="surface" id="developer">
+<div class="wrap">
+  <div class="dev-inner">
+    <div class="dev-avatar">SK</div>
+    <div class="dev-name">Shiva Keshava</div>
+    <div class="dev-role">AI Trainer · Data Annotator · Prompt Engineer · Bengaluru, India</div>
+    <p style="color:var(--muted);font-size:0.88rem;max-width:520px;margin:0 auto 28px;line-height:1.7;">B.Tech in AI & Data Science. I spend my days making AI better — writing better prompts, evaluating outputs, labeling data, and providing human feedback that teaches models to think more clearly.</p>
+    <div class="dev-links">
+      <a href="https://linkedin.com/in/shiva-keshava-b71355364" target="_blank" class="dev-link">LinkedIn</a>
+      <a href="https://github.com/shiav321" target="_blank" class="dev-link">GitHub</a>
+      <a href="https://shiav321.github.io" class="dev-link">Portfolio</a>
+      <a href="mailto:shivakeshava784@gmail.com" class="dev-link">Email</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>© 2025 Shiva Keshava · PromptLens — AI Prompt Engineering & Annotation Toolkit · <a href="https://shiav321.github.io">shiav321.github.io</a></footer>
+</body>
+</html>
